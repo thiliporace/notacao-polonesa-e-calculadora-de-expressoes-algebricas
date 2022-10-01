@@ -1,5 +1,5 @@
 // Lucas Goulart de Farias Meres - 42127459
-// Thiago Leandro Liporace, 42128481
+// Thiago Leandro Liporace - 42128481
 // ------------Referencias---------------
 // Usamos de referencia as tabelas de exemplo disponibilizadas nos PDFs sobre a atividade 
 // no moodle, que foram essenciais para que o codigo funcionasse.
@@ -57,53 +57,55 @@ string posfixa(Stack &stack,string equation){
   return output;
 }
 
-int calculo (Stack_int &stack_int,string equation_posfixa,int value_list[26]){
-  int result,cont,x,y,new_value;
+float calculo (Stack_float &stack_float,string equation_posfixa,float value_list[26]){
+  float result,cont,x,y,new_value;
   for (int i = 0;i < equation_posfixa.length();i++){
     for (int j = 0;j < 26;j++){
       if (equation_posfixa[i] == alfabeto[j]){
-        push_int(stack_int,value_list[j]);
+        push_float(stack_float,value_list[j]);
         break;
       }
       else if(equation_posfixa[i] == '+'){
-        x = pop_int(stack_int);
-        y = pop_int(stack_int);
+        x = pop_float(stack_float);
+        y = pop_float(stack_float);
         new_value = x+y;
-        push_int(stack_int,new_value);
+        push_float(stack_float,new_value);
         break;
       }
       else if(equation_posfixa[i] == '-'){
-        x = pop_int(stack_int);
-        y = pop_int(stack_int);
+        x = pop_float(stack_float);
+        y = pop_float(stack_float);
         new_value = y-x;
-        push_int(stack_int,new_value);
+        push_float(stack_float,new_value);
         break;
       }
       else if(equation_posfixa[i] == '*'){
-        x = pop_int(stack_int);
-        y = pop_int(stack_int);
+        x = pop_float(stack_float);
+        y = pop_float(stack_float);
         new_value = x*y;
-        push_int(stack_int,new_value);
+        push_float(stack_float,new_value);
         break;
       }
       else if(equation_posfixa[i] == '/'){
-        x = pop_int(stack_int);
-        y = pop_int(stack_int);
+        x = pop_float(stack_float);
+        y = pop_float(stack_float);
         new_value = y/x;
-        push_int(stack_int,new_value);
+        push_float(stack_float,new_value);
         break;
       }
       else if(equation_posfixa[i] == '^'){
-        x = pop_int(stack_int);
-        y = pop_int(stack_int);
-        new_value = y^x;
-        push_int(stack_int,new_value);
+        x = pop_float(stack_float);
+        y = pop_float(stack_float);
+        new_value = y;
+        for (int z = 0;z < x-1;z++)
+          new_value = new_value*y;
+        push_float(stack_float,new_value);
         break;
       }
     }
   }
-  result = top_int(stack_int);
-  pop_int(stack_int);
+  result = top_float(stack_float);
+  pop_float(stack_float);
   return result;
 }
 
@@ -175,12 +177,12 @@ bool check_equation(string equation){
 
 
 int main() {
-  int value_list[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+  float value_list[26] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   bool flag = false;
-  int entry,num,result,value;
+  float entry,num,result,value;
   string equation = "",equation_posfixa = "";
   Stack stack = create();
-  Stack_int stack_int = create_int();
+  Stack_float stack_float = create_float();
   cout << "-------------------- Bem-vindo ao sistema! --------------------\n";
   while (true){
     cout << "Escolha uma das opcoes abaixo:\n" << "1. Entrada da expressão aritmética na notação infixa.\n2. Entrada dos valores numéricos associados às variáveis.\n3. Conversão da expressão, da notação infixa para a notação posfixa, e exibição da expressão convertida para posfixa.\n4. Avaliação da expressão (apresentação do resultado do cálculo, mostrando a expressão e os valores das variáveis).\n5. Encerramento do programa.\n";
@@ -224,7 +226,7 @@ int main() {
         cout << "\n----------------------------------------------------\nNao ha uma equacao definida para isso.\n----------------------------------------------------\n";
       }
       else{
-        result = calculo(stack_int,equation_posfixa,value_list);
+        result = calculo(stack_float,equation_posfixa,value_list);
         cout << "----------------------------------------------------\nResultado da equacao: " << result << "\n";
         cout << "----------------------------------------------------\n";
       }      

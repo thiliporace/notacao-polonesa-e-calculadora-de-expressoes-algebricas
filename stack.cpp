@@ -9,13 +9,13 @@ Stack create(){ // Coloca o valor \0 em todos os index da pilha
     return stack;
 }
 
-Stack_int create_int(){ // Coloca o valor \0 em todos os index da pilha
-    Stack_int stack_int;
-    stack_int.count = 0;
+Stack_float create_float(){ // Coloca o valor \0 em todos os index da pilha
+    Stack_float stack_float;
+    stack_float.count = 0;
     for (int i = 0;i < STACK_CAPACITY;i++){
-        stack_int.elements[i] = 0;
+        stack_float.elements[i] = 0;
     }
-    return stack_int;
+    return stack_float;
 }
 
 bool push(Stack &stack, char e){ // Empurra um elemento para cima da pilha
@@ -29,13 +29,13 @@ bool push(Stack &stack, char e){ // Empurra um elemento para cima da pilha
     } 
 }
 
-bool push_int(Stack_int &stack_int, int f){ // Empurra um elemento para cima da pilha
-    if (stack_int.count == STACK_CAPACITY){
+bool push_float(Stack_float &stack_float, float f){ // Empurra um elemento para cima da pilha
+    if (stack_float.count == STACK_CAPACITY){
         return false;
     }
     else{
-        stack_int.elements[stack_int.count] = f;
-        stack_int.count++;
+        stack_float.elements[stack_float.count] = f;
+        stack_float.count++;
         return true;
     } 
 }
@@ -50,13 +50,23 @@ char pop(Stack &stack){ // Apaga o ultimo elemento colocado na pilha
     return value;
 }
 
-int pop_int(Stack_int &stack_int){ // Apaga o ultimo elemento colocado na pilha
-    if (stack_int.count == 0){
+float pop_float(Stack_float &stack_float){ // Apaga o ultimo elemento colocado na pilha
+    if (stack_float.count == 0){
         return 0;
     }
-    int value = stack_int.elements[stack_int.count-1];
-    stack_int.elements[stack_int.count-1] = 0; 
-    stack_int.count--;
+    float value = stack_float.elements[stack_float.count-1];
+    stack_float.elements[stack_float.count-1] = 0; 
+    stack_float.count--;
+    return value;
+}
+
+int pop_int(Stack_float &stack_float){ // Apaga o ultimo elemento colocado na pilha
+    if (stack_float.count == 0){
+        return 0;
+    }
+    int value = stack_float.elements[stack_float.count-1];
+    stack_float.elements[stack_float.count-1] = 0; 
+    stack_float.count--;
     return value;
 }
 
@@ -67,11 +77,11 @@ char top(Stack &stack){ // Checa o valor da do ultimo elemento da pilha
     return stack.elements[stack.count-1];
 }
 
-int top_int(Stack_int &stack_int){ // Checa o valor da do ultimo elemento da pilha
-    if (stack_int.count == 0){
+float top_float(Stack_float &stack_float){ // Checa o valor da do ultimo elemento da pilha
+    if (stack_float.count == 0){
         return 0;
     }
-    return stack_int.elements[stack_int.count-1];
+    return stack_float.elements[stack_float.count-1];
 }
 
 void print_top(Stack &stack) { // Apenas printa o valor do ultimo elemento para o usuario
@@ -82,8 +92,8 @@ void print_top(Stack &stack) { // Apenas printa o valor do ultimo elemento para 
         cout << "Topo da pilha: " << topo << '\n';
 }
 
-void print_top_int(Stack_int &stack_int) { // Apenas printa o valor do ultimo elemento para o usuario
-    int topo = top_int(stack_int);
+void print_top_float(Stack_float &stack_float) { // Apenas printa o valor do ultimo elemento para o usuario
+    float topo = top_float(stack_float);
     if (topo == 0)
         cout << "Pilha vazia. \n";
     else
